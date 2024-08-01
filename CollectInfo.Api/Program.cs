@@ -14,6 +14,7 @@ builder.Services.AddScoped(setting =>
 {
     var config = setting.GetRequiredService<IConfiguration>();
     var appSetting = config.GetSection("AppSettings").Get<AppSettings>();
+    appSetting.TokenAccessRepository = builder.Configuration["TokenAccessRepository"];
     return appSetting;
 });
 

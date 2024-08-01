@@ -75,7 +75,6 @@ namespace CollectInfo.Infrastructure
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla", "5.0"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.TokenAccessRepository);
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
             var response = await client.GetAsync(url);
             
             response.EnsureSuccessStatusCode();
