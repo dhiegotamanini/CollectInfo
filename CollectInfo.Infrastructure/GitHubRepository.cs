@@ -71,6 +71,9 @@ namespace CollectInfo.Infrastructure
 
         private async Task<T> MakeRequest<T>(string url)
         {
+            if (string.IsNullOrWhiteSpace(_settings.TokenAccessRepository))
+                throw new ArgumentNullException("Access Repository Token is null or empty");
+
             using var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla", "5.0"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
