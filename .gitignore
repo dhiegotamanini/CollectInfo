@@ -1,0 +1,147 @@
+# Ignore Visual Studio temporary files, build results, and
+# build logs.
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.sln.ide
+
+# Ignore Visual Studio 2019 Mac's Cache Directory
+.vscode/
+
+# Ignore Visual Studio temporary files, build results, and
+# build logs.
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.sln.ide
+
+# Ignore Visual Studio 2019 Mac's Cache Directory
+.vscode/
+
+# Ignore Visual Studio temporary files, build results, and
+# build logs.
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Visual Studio Code workspace settings
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Auto-generated files
+*.sln.ide
+
+# Ignore Visual Studio 2019 Mac's Cache Directory
+.vscode/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+*.jpg
+*.png
+
+
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Cloud directory caches
+*.~lock.*
+~$*
+*.tmp
+
+# Windows shortcuts
+*.lnk
+
+# Ignore .NET Core build files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore NuGet packages
+*.nupkg
+*.snupkg
+*.symbols.nupkg
+
+# Ignore .NET Core AssemblyInfo generated files
+AssemblyInfo.cs
+
+# Ignore StyleCop config files
+StyleCop.Cache
+
+# Ignore JetBrains Rider files
+.idea/
+*.sln.iml
+
+# Ignore JetBrains Rider / IntelliJ .idea
+.idea/
+
+# Ignore JetBrains Rider workspace
+.idea/
+
+
+# Arquivos de configuração e binários
+*.bin
+*.dtbcache.v2
+*.vsidx
+*.config
+*.txt
+
+# Arquivos e diretórios para ignorar
+.vs/
+
+
