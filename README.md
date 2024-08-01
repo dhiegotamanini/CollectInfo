@@ -6,7 +6,16 @@ This project was created to get some informations from api github. The informati
 By default, I created two endpoints for it.
 
 total-letters-by-files : Return a list of how many letters exist by file
-total-letters-all-files: Returns a list of sum how many letters exist in all the files 
+total-letters-all-files: Returns a list of sum how many letters exist in all the files .
+To run the project locally, you can access by postman or swagger.
+If you are running by https, then url is 
+
+   total-letters-by-files : https://localhost:7107/api/v1/total-letters-by-files
+   total-letters-all-files : https://localhost:7107/api/v1/total-letters-all-files   
+
+the format of end point is https or http :// localhost:{port}/api/v1/{endpoint}
+
+You can see this details in lauchSettings.json and in StatisticController.cs . These two files are in CollectInfo.Api project
 
 ## Technologies Used
 
