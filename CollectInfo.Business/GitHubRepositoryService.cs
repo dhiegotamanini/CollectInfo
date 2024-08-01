@@ -18,7 +18,6 @@ namespace CollectInfo.Business
             try
             {
                 var latestCommitSha = _repository.GetLatestCommitSha().Result;
-                //var latestCommitSha = "";
                 if (string.IsNullOrWhiteSpace(latestCommitSha))
                 {
                     throw new HttpException((int)HttpStatusCode.BadRequest, "Bad Request: Commit SHA is null");
