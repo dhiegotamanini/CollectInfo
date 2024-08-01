@@ -10,12 +10,10 @@ namespace CollectInfo.Infrastructure
     public class GitHubRepository : IGitHubRepository
     {
         private readonly AppSettings _settings;
-        private readonly string _token = "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";
 
         public GitHubRepository(AppSettings settings)
         {
             _settings = settings;
-            //_token = DecodeBase64(_settings.TokenAccessRepository);
         }
 
         public async Task<string> GetLatestCommitSha()
@@ -76,25 +74,13 @@ namespace CollectInfo.Infrastructure
             using var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla", "5.0"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.TokenAccessRepository);
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "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");
             var response = await client.GetAsync(url);
             
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(responseBody);
-        }
-
-        public static string EncodeBase64(string token)
-        {
-            var bytes = Encoding.UTF8.GetBytes(token);
-            return Convert.ToBase64String(bytes);
-        }
-
-        public static string DecodeBase64(string base64Token)
-        {
-            var bytes = Convert.FromBase64String(base64Token);
-            return Encoding.UTF8.GetString(bytes);
         }
 
     }
