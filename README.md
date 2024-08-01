@@ -21,8 +21,9 @@ The project is organized into the following layers:
 
 - **CollectInfo.Api**: Handle incoming HTTP requests and return responses.
 - **CollectInfo.Business**: Contain the business logic of the application, some validation and format return to CollectInfo.Api .
-- **Repositories**: Handle connection to external api to get data.
-- **Models**: Represent the data structures of the application.
+- **CollectInfo.Infrastructure**: Handle connection to external api to get data.
+- **CollectInfo.Models**: Represent the data structures of the application and have some abstraction(interfaces) of business class and infrastructure.
+- **CollectInfo.Tests**: Contain some unit test to service class.
 
 ## Dependency Injection
 
