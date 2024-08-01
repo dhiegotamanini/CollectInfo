@@ -10,23 +10,25 @@ namespace CollectInfo.Infrastructure
     public class GitHubRepository : IGitHubRepository
     {
         private readonly AppSettings _settings;
+        private readonly string token;
 
         public GitHubRepository(AppSettings settings)
         {
             _settings = settings;
+            token = DecodeBase64(_settings.TokenAccessRepository);
         }
 
         public async Task<string> GetLatestCommitSha()
         {
             var url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/commits";
-            var response = await MakeRequest<List<GitHubCommitDetails>>(url);
+            var response = await MakeRequest<List<GitHubCommitDetails>>(url, token);
             return response.FirstOrDefault().Sha;
         }
 
         public async Task<GitHubResultTreeRepository> GetRepositoryTree(string sha)
         {
             var url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/git/trees/{sha}?recursive=1";
-            var response = await MakeRequest<GitHubResultTreeRepository>(url);
+            var response = await MakeRequest<GitHubResultTreeRepository>(url, token);
             return response;
         }
 
@@ -36,7 +38,7 @@ namespace CollectInfo.Infrastructure
             var tasksToRequest = filesName.Select(async fileName =>
             {
                 string url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/contents/{fileName}";
-                var file = await MakeRequest<GitHubFile>(url);
+                var file = await MakeRequest<GitHubFile>(url, token);
                 string base64Content = file.Content.ToString();
                 var bytes = Convert.FromBase64String(base64Content);
 
@@ -69,18 +71,32 @@ namespace CollectInfo.Infrastructure
             return filesContent;
         }
 
-        private async Task<T> MakeRequest<T>(string url)
+        private async Task<T> MakeRequest<T>(string url, string tokenDecript = "")
         {
             using var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla", "5.0"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.TokenAccessRepository);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.TokenAccessRepository);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenDecript);
             var response = await client.GetAsync(url);
             
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<T>(responseBody);
         }
+
+        public static string EncodeBase64(string token)
+        {
+            var bytes = Encoding.UTF8.GetBytes(token);
+            return Convert.ToBase64String(bytes);
+        }
+
+        public static string DecodeBase64(string base64Token)
+        {
+            var bytes = Convert.FromBase64String(base64Token);
+            return Encoding.UTF8.GetString(bytes);
+        }
+
     }
 
 }
