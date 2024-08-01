@@ -10,25 +10,25 @@ namespace CollectInfo.Infrastructure
     public class GitHubRepository : IGitHubRepository
     {
         private readonly AppSettings _settings;
-        private readonly string token;
+        private readonly string _token;
 
         public GitHubRepository(AppSettings settings)
         {
             _settings = settings;
-            token = DecodeBase64(_settings.TokenAccessRepository);
+            _token = DecodeBase64(_settings.TokenAccessRepository);
         }
 
         public async Task<string> GetLatestCommitSha()
         {
             var url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/commits";
-            var response = await MakeRequest<List<GitHubCommitDetails>>(url, token);
+            var response = await MakeRequest<List<GitHubCommitDetails>>(url);
             return response.FirstOrDefault().Sha;
         }
 
         public async Task<GitHubResultTreeRepository> GetRepositoryTree(string sha)
         {
             var url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/git/trees/{sha}?recursive=1";
-            var response = await MakeRequest<GitHubResultTreeRepository>(url, token);
+            var response = await MakeRequest<GitHubResultTreeRepository>(url);
             return response;
         }
 
@@ -38,7 +38,7 @@ namespace CollectInfo.Infrastructure
             var tasksToRequest = filesName.Select(async fileName =>
             {
                 string url = $"{_settings.BaseUrl}{_settings.OwnerRepository}/{_settings.Repository}/contents/{fileName}";
-                var file = await MakeRequest<GitHubFile>(url, token);
+                var file = await MakeRequest<GitHubFile>(url);
                 string base64Content = file.Content.ToString();
                 var bytes = Convert.FromBase64String(base64Content);
 
@@ -71,13 +71,13 @@ namespace CollectInfo.Infrastructure
             return filesContent;
         }
 
-        private async Task<T> MakeRequest<T>(string url, string tokenDecript = "")
+        private async Task<T> MakeRequest<T>(string url)
         {
             using var client = new HttpClient();
             client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Mozilla", "5.0"));
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.TokenAccessRepository);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenDecript);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _token);
             var response = await client.GetAsync(url);
             
             response.EnsureSuccessStatusCode();
